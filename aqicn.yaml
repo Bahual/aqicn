@@ -1,0 +1,45 @@
+sensor:
+  - platform: rest
+    name: temuco_aqi
+    resource: https://api.waqi.info/feed/chile/las-encinas-temuco/?token=TOKEN
+    method: GET
+    value_template: >
+      {% if value is string and value | length > 0 %}
+        {% set clean = value.split('%')[0] %}
+        {% set data = clean | from_json %}
+        {{ data.data.aqi | int(0) }}
+      {% else %}
+        0
+      {% endif %}
+    unit_of_measurement: "AQI"
+    scan_interval: 900
+
+  - platform: rest
+    name: temuco_pm10
+    resource: https://api.waqi.info/feed/chile/las-encinas-temuco/?token=TOKEN
+    method: GET
+    value_template: >
+      {% if value is string and value | length > 0 %}
+        {% set clean = value.split('%')[0] %}
+        {% set data = clean | from_json %}
+        {{ data.data.iaqi.pm10.v if data.data.iaqi.pm10 is defined else 0 }}
+      {% else %}
+        0
+      {% endif %}
+    unit_of_measurement: "µg/m³"
+    scan_interval: 900
+
+  - platform: rest
+    name: temuco_co
+    resource: https://api.waqi.info/feed/chile/las-encinas-temuco/?token=TOKEN
+    method: GET
+    value_template: >
+      {% if value is string and value | length > 0 %}
+        {% set clean = value.split('%')[0] %}
+        {% set data = clean | from_json %}
+        {{ data.data.iaqi.co.v if data.data.iaqi.co is defined else 0 }}
+      {% else %}
+        0
+      {% endif %}
+    unit_of_measurement: "ppm"
+    scan_interval: 900
