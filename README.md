@@ -22,7 +22,7 @@ Los parámetros incluidos son:
 
 1. Obtén una API key de AQICN en https://aqicn.org/
 2. Reemplaza `TOKEN` en `aqicn.yaml` por tu API key.
-3. Incluye este archivo en tu configuración de Home Assistant, por ejemplo:
+3. Copia `aqicn.yaml` en la carpeta `config` de tu Home Assistant y añade esto en `configuration.yaml`:
 
 ```yaml
 sensor: !include aqicn.yaml
