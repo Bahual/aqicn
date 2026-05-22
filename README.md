@@ -28,6 +28,8 @@ Los parámetros incluidos son:
 sensor: !include aqicn.yaml
 ```
 
+   Alternativa: puedes pegar directamente el contenido completo de `aqicn.yaml` dentro de `configuration.yaml` en lugar de usar `!include`.
+
 4. Reinicia Home Assistant.
 
 ## Notas
