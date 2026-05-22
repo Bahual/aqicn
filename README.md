@@ -1,48 +1,57 @@
-# Aqicn Home Assistant Sensor
+# AQICN Home Assistant Sensor
 
-Sensor Home Assistant para mostrar la calidad del aire en Temuco usando la API de AQICN.
+Configuracion de sensores REST para Home Assistant que consulta la calidad del aire de Temuco (estacion Las Encinas) usando la API de AQICN/WAQI.
 
-## Qué hace
+## Contenido
 
-Este proyecto define sensores REST en Home Assistant que consultan la calidad del aire en Temuco (Las Encinas) desde:
+El repositorio incluye un archivo principal:
 
-- https://aqicn.org/
+- `aqicn.yaml`: define tres sensores `platform: rest` para Home Assistant.
 
-Los parámetros incluidos son:
+## Sensores incluidos
 
-- `temuco_aqi`: índice de calidad del aire `AQI` (correspondiente a PM2.5)
-- `temuco_pm10`: concentración de PM10 en `µg/m³`
-- `temuco_co`: concentración de monóxido de carbono `ppm`
+Los sensores consultan el endpoint:
 
-## Archivo principal
+- `https://api.waqi.info/feed/chile/las-encinas-temuco/?token=TOKEN`
 
-- `aqicn.yaml`
+Entidades definidas:
 
-## Cómo usarlo en Home Assistant
+- `temuco_aqi`: indice de calidad del aire (`AQI`)
+- `temuco_pm10`: concentracion de `PM10` en `ug/m3`
+- `temuco_co`: concentracion de monoxido de carbono en `ppm`
 
-1. Obtén una API key de AQICN en https://aqicn.org/
-2. Reemplaza `TOKEN` en `aqicn.yaml` por tu API key.
-3. Copia `aqicn.yaml` en la carpeta `config` de tu Home Assistant y añade esto en `configuration.yaml`:
+## Instalacion
+
+1. Obtén una API key de AQICN en `https://aqicn.org/`.
+2. Reemplaza `TOKEN` dentro de `aqicn.yaml` por tu API key.
+3. Copia `aqicn.yaml` a la carpeta `config` de Home Assistant.
+4. Incluye el archivo en tu `configuration.yaml`:
 
 ```yaml
 sensor: !include aqicn.yaml
 ```
 
-   Alternativa: puedes pegar directamente el contenido completo de `aqicn.yaml` dentro de `configuration.yaml` en lugar de usar `!include`.
+Tambien puedes copiar el contenido completo de `aqicn.yaml` directamente dentro de `configuration.yaml` si no quieres usar `!include`.
 
-4. Reinicia Home Assistant.
+5. Reinicia Home Assistant.
 
-## Notas
+## Detalles tecnicos
 
-- El sensor usa `platform: rest` y consulta la misma URL para cada entidad.
-- `scan_interval` está configurado en 900 segundos (15 minutos) para no sobrecargar la API.
-- Si algún valor no está disponible en la respuesta de la API, el sensor devolverá `0`.
-- La documentación de la API usada es: https://aqicn.org/json-api/doc/
+- Los tres sensores usan `platform: rest`.
+- Todos consultan la misma URL y extraen distintos campos desde la respuesta JSON.
+- `scan_interval` esta configurado en `900` segundos (15 minutos).
+- Si la API no devuelve un valor esperado, el sensor responde con `0`.
 
-## Advertencia
+## Referencias
 
-Asegúrate de no subir tu `TOKEN` público ni compartirlo en repositorios abiertos.
+- Sitio de AQICN: `https://aqicn.org/`
+- Documentacion de la API: `https://aqicn.org/json-api/doc/`
 
-## Licencia
+## Recomendaciones
 
-Este repositorio es solo un ejemplo de integración de la API de AQICN con Home Assistant.
+- No publiques tu `TOKEN` en repositorios abiertos.
+- Si vas a versionar una configuracion real, usa secretos o variables separadas para credenciales.
+
+## Alcance
+
+Este repositorio es un ejemplo simple de integracion entre Home Assistant y la API de AQICN.
