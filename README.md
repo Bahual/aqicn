@@ -37,6 +37,7 @@ sensor: !include aqicn.yaml
 - El sensor usa `platform: rest` y consulta la misma URL para cada entidad.
 - `scan_interval` está configurado en 900 segundos (15 minutos) para no sobrecargar la API.
 - Si algún valor no está disponible en la respuesta de la API, el sensor devolverá `0`.
+- La documentación de la API usada es: https://aqicn.org/json-api/doc/
 
 ## Advertencia
 
